@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BREAD(Browse, Read, Edit, ADD, Delete)</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>SQLite Bread(Browse, Read, Edit, ADD, Delete) and Pagination</h1>
+
+        <form action="" method="get">
+            <input type="hidden" name="page" value="1">
+            <div class="inside">
+                <div class="inline"> <label for="name">Name</label>
+                    <div class="contain-input"><input type="text" id="name" name="name" placeholder="insert your name"
+                            value="<%= query.name%>"></div>
+                </div>
+                <div class="inline"> <label for="height">Height</label>
+                    <div class="contain-input"><input type="number" id="height" name="height"
+                            placeholder="insert your height" value="<%= query.height>"></div>
+                </div>
+                <div class="inline"> <label for="weight">Weight</label>
+                    <div class="contain-input"><input type="number" step="0.001" id="weight" name="weight"
+                            placeholder="insert your weight" value="<%= query.weight>"></div>
+                </div>
+                <div class="rowbirth"><label for="birthdate">Birthdate</label>
+                    <div class="birthdate">
+                        <input type="date" id="strBirth" name="strBirth" value="<% query.strBirth%>">
+                        <p>s.d</p>
+                        <input type="date" id="endBirth" name="endBirth" value="<% query.endBirth%>">
+                    </div>
+                </div>
+                <div class="rowmarried"><label for="married">Is Married</label>
+
+                    <%if(query.married==0){ %>
+                        <select name="married" id="married">
+                            <option value="" disabled>-select married-</option>
+                            <option value="0" selected>Not Yet</option>
+                            <option value="1">Yes</option>
+                        </select>
+                        <% } else if(query.married==1){ %>
+                            <select name="married" id="married">
+                                <option value="" disabled>-select married-</option>
+                                <option value="0">Not Yet</option>
+                                <option value="1" selected>Yes</option>
+                            </select>
+                            <%} else {%>
+                                <select name="married" id="married">
+                                    <option value="" disabled selected>-select married-</option>
+                                    <option value="0">Not Yet</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                                <%}%>
+                </div>
+                <div class="rowradio">
+                    <legend>Operation</legend>
+                    <% if(query.Operator=='OR' ) { %>
+                        <div class="radio">
+                            <div class="option">
+                                <input type="radio" id="OR" name="Operator" value="OR" checked /> OR
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="AND" name="Operator" value="AND" /> AND
+                            </div>
+                        </div>
+                        <% } else if (query.Operator=='AND' ) { %>
+                            <div class="radio">
+                                <div class="option">
+                                    <input type="radio" id="OR" name="Operator" value="OR" /> OR
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="AND" name="Operator" checked value="AND" /> AND
+                                </div>
+                            </div>
+                            <% } else { %>
+                                <div class="radio">
+                                    <div class="option">
+                                        <input type="radio" id="OR" name="Operator" value="OR" checked required /> OR
+                                    </div>
+                                    <div class="option">
+                                        <input type="radio" id="AND" name="Operator" value="AND" /> AND
+                                    </div>
+                                </div>
+                                <% } %>
+                </div>
+                <div class="findcluster">
+                    <button type="submit" class="search">Search</button>
+                    <a href="/" class="reset"> Reset</a>
+                </div>
+            </div>
+        </form>
+
+        <div class="table">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Height</th>
+                        <th>Weight</th>
+                        <th>Birth Date</th>
+                        <th>Is Married</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%data.forEach((item,index)=>{ %>
+
+                        <tr>
+                            <td>
+                                <%= index +1 + offset %>
+                            </td>
+                            <td>
+                                <%= item.name %>
+                            </td>
+                            <td>
+                                <%= item.height %>
+                            </td>
+                            <td>
+                                <%= item.weight %>
+                            </td>
+                            <td>
+                                <%= item.birthdate %>
+                            </td>
+                            <td>
+                                <%= item.married ? "Yes" : "Not Yet" %>
+                            </td>
+                            <td>
+                                <a href="/edit/ <%= item.id%> " class="update">Update</a>&nbsp <button id="myBtn"
+                                    class="delete"
+                                    onclick="opendialog(`<%= item.id%>` , `<%= item.name%>`)">Delete</button>
+                            </td>
+                        </tr>
+                        <% }) %>
+
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>
