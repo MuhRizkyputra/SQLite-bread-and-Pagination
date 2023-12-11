@@ -134,8 +134,7 @@
                                 <%= item.married ? "Yes" : "Not Yet" %>
                             </td>
                             <td>
-                               <a href="/edit/<%= item.id%> " class="update">Update</a>&nbsp 
-                               <a href="/delete/<%=item.id%>" class="delete" onclick="return confirmation(`<%= item.name%>`)">Delete</a>
+                               <a href="/edit/<%= item.id%> " class="update">Update</a>&nbsp <button id="myBtn" class="delete" onclick="opendialog(`<%= item.id%>` , `<%= item.name%>`)">Delete</button>
                                 
                             </td>
 
@@ -196,11 +195,20 @@
                
         </div>
     </div>
-    <script>
-        function confirmation(name) {
-            return confirm(`Apakah kamu yakin akan menghapus data '${name}' ?`)
-        }
-    </script>
+    <div id="deleteConfirm" class="modal" >
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Delete Confirmation</h4>
+           <span class="close" onclick="closeDialog()">&times;</span></div>
+           <p id="dialog"></p>
+           <div class="modal-footer">
+            <button class="no" onclick="closeDialog()">No</button>
+           <a href="#" id="confirmed">Yes</a>
+        </div>
+        </div>
+       
+       </div>
 </body>
 
 </html>
